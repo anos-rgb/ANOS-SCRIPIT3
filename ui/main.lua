@@ -176,6 +176,7 @@ end
 -- Create Tab Bar
 function UI.CreateTabBar()
     local tabFrame = Instance.new("Frame")
+    tabFrame.Name = "TabBar"
     tabFrame.Size = UDim2.new(1, -20, 0, 45)
     tabFrame.Position = UDim2.new(0, 10, 0, 70)
     tabFrame.BackgroundTransparency = 1
@@ -195,15 +196,23 @@ function UI.CreateTabBar()
     }
     
     for _, tabData in ipairs(tabs) do
-        local tab = Components.CreateTab({
-            parent = tabFrame,
-            text = tabData.name,
-            size = UDim2.new(0, 110, 1, 0),
-            active = tabData.id == currentTab,
-            callback = function()
-                UI.SwitchTab(tabData.id)
-            end
-        })
+        local tab = Instance.new("TextButton")
+        tab.Name = "Tab_" .. tabData.id
+        tab.Size = UDim2.new(0, 110, 1, 0)
+        tab.BackgroundColor3 = tabData.id == currentTab and Themes.GetColor("primary") or Themes.GetColor("backgroundSecondary")
+        tab.BackgroundTransparency = 0.2
+        tab.Text = tabData.name
+        tab.TextColor3 = Themes.GetColor("textPrimary")
+        tab.TextSize = 12
+        tab.Font = Enum.Font.GothamBold
+        tab.BorderSizePixel = 0
+        tab.Parent = tabFrame
+        
+        Helpers.CreateCorner(tab, 12)
+        
+        tab.MouseButton1Click:Connect(function()
+            UI.SwitchTab(tabData.id)
+        end)
     end
 end
 
@@ -240,10 +249,18 @@ function UI.SwitchTab(tabName)
         end
     end
     
-    -- Update tab buttons
-    for _, tab in pairs(mainFrame:FindFirstChild("Frame"):GetChildren()) do
-        if tab:IsA("TextButton") then
-            tab.BackgroundColor3 = Themes.GetColor("backgroundSecondary")
+    -- Update tab buttons highlighting
+    local tabBar = mainFrame:FindFirstChild("TabBar")
+    if tabBar then
+        for _, tab in pairs(tabBar:GetChildren()) do
+            if tab:IsA("TextButton") then
+                local tabId = tab.Name:gsub("Tab_", "")
+                if tabId == tabName then
+                    Helpers.TweenColor(tab, Themes.GetColor("primary"), 0.2)
+                else
+                    Helpers.TweenColor(tab, Themes.GetColor("backgroundSecondary"), 0.2)
+                end
+            end
         end
     end
     
@@ -318,7 +335,7 @@ function UI.LoadMovementTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "INFINITE JUMP",
-        color = Themes.GetColor("info"),
+        color = Color3.fromRGB(108, 117, 125),
         callback = function()
             Movement.InfiniteJump()
         end
@@ -353,7 +370,7 @@ function UI.LoadVisualTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "TOGGLE ESP",
-        color = Themes.GetColor("info"),
+        color = Color3.fromRGB(13, 110, 253),
         callback = function()
             Visual.ToggleESP()
         end
@@ -362,7 +379,7 @@ function UI.LoadVisualTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "TOGGLE X-RAY",
-        color = Themes.GetColor("danger"),
+        color = Color3.fromRGB(220, 53, 69),
         callback = function()
             Visual.ToggleXRay()
         end
@@ -371,7 +388,7 @@ function UI.LoadVisualTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "REMOVE FOG",
-        color = Themes.GetColor("success"),
+        color = Color3.fromRGB(40, 167, 69),
         callback = function()
             Visual.RemoveFog()
         end
@@ -380,7 +397,7 @@ function UI.LoadVisualTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "NIGHT VISION",
-        color = Themes.GetColor("warning"),
+        color = Color3.fromRGB(25, 135, 84),
         callback = function()
             Visual.ToggleNightVision()
         end
@@ -394,7 +411,7 @@ function UI.LoadTeleportTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "SAVE CHECKPOINT",
-        color = Themes.GetColor("success"),
+        color = Color3.fromRGB(40, 167, 69),
         callback = function()
             Teleport.SaveCheckpoint()
         end
@@ -403,7 +420,7 @@ function UI.LoadTeleportTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "LOAD CHECKPOINT",
-        color = Themes.GetColor("info"),
+        color = Color3.fromRGB(13, 110, 253),
         callback = function()
             Teleport.LoadCheckpoint()
         end
@@ -412,7 +429,7 @@ function UI.LoadTeleportTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "TELEPORT TO SPAWN",
-        color = Themes.GetColor("backgroundSecondary"),
+        color = Color3.fromRGB(108, 117, 125),
         callback = function()
             Teleport.ToSpawn()
         end
@@ -445,7 +462,7 @@ function UI.LoadMiscTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "RESET CHARACTER",
-        color = Themes.GetColor("danger"),
+        color = Color3.fromRGB(220, 53, 69),
         callback = function()
             Misc.ResetCharacter()
         end
@@ -454,7 +471,7 @@ function UI.LoadMiscTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "REJOIN SERVER",
-        color = Themes.GetColor("backgroundSecondary"),
+        color = Color3.fromRGB(13, 110, 253),
         callback = function()
             Misc.RejoinServer()
         end
@@ -463,7 +480,7 @@ function UI.LoadMiscTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "COPY GAME LINK",
-        color = Themes.GetColor("info"),
+        color = Color3.fromRGB(23, 162, 184),
         callback = function()
             Misc.CopyGameLink()
         end
@@ -472,7 +489,7 @@ function UI.LoadMiscTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "SERVER HOP",
-        color = Themes.GetColor("warning"),
+        color = Color3.fromRGB(255, 193, 7),
         callback = function()
             Misc.ServerHop()
         end
@@ -481,7 +498,7 @@ function UI.LoadMiscTab()
     Components.CreateButton({
         parent = contentFrame,
         text = "PLAYER INFO",
-        color = Themes.GetColor("success"),
+        color = Color3.fromRGB(108, 117, 125),
         callback = function()
             Misc.PrintPlayerInfo()
         end
