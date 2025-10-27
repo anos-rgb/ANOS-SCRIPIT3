@@ -2,11 +2,11 @@
     ANOS EXPLOIT - Premium Edition
     Main Entry Point
     
-    GitHub: https://github.com/yourusername/ANOS-Exploit
+    GitHub: https://github.com/anos-rgb/ANOS-SCRIPIT3
     
     Installation:
     1. Download all files from GitHub
-    2. Load this main file: loadstring(game:HttpGet("YOUR_GITHUB_RAW_URL/anos.lua"))()
+    2. Load this main file: loadstring(game:HttpGet(""https://raw.githubusercontent.com/anos-rgb/ANOS-SCRIPIT3/main/"))()
 ]]--
 
 local CoreGui = game:GetService("CoreGui")
@@ -14,7 +14,7 @@ local Players = game:GetService("Players")
 
 local player = Players.LocalPlayer
 
--- GitHub Raw URL (Update this with your actual GitHub repository)
+-- GitHub Raw URL
 local GITHUB_BASE = "https://raw.githubusercontent.com/anos-rgb/ANOS-SCRIPIT3/main/"
 
 -- Global ANOS namespace
