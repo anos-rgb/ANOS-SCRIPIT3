@@ -1,83 +1,100 @@
 --[[
-    ANOS EXPLOIT - Configuration
-    Settings dan default values
-]]
+    ANOS Configuration Module
+    Stores all settings and states
+]]--
 
 local Config = {}
 
--- Default settings untuk features
-Config.Defaults = {
-    WalkSpeed = 50,
-    FlySpeed = 50,
-    JumpPower = 100,
-    Brightness = 2
-}
-
--- Feature states (akan di-track runtime)
+-- Feature States
 Config.States = {
-    Speed = false,
-    Fly = false,
-    Noclip = false,
-    Fullbright = false,
-    Brightness = false,
-    AntiKick = false,
-    ESP = false
+    speed = false,
+    fly = false,
+    noclip = false,
+    fullbright = false,
+    antiKick = false,
+    esp = false,
+    xray = false
 }
 
--- UI Theme colors dengan transparansi
-Config.Theme = {
-    -- Background colors (lebih transparan)
-    MainBg = Color3.fromRGB(15, 15, 20),
-    MainBgTransparency = 0.3, -- Tambah transparansi
+-- Feature Settings
+Config.Settings = {
+    walkSpeed = 50,
+    flySpeed = 50,
+    jumpPower = 100,
     
-    SecondaryBg = Color3.fromRGB(25, 25, 30),
-    SecondaryBgTransparency = 0.4,
+    -- New brightness settings
+    brightness = {
+        enabled = false,
+        level = 3,
+        ambient = Color3.fromRGB(200, 200, 200),
+        outdoorAmbient = Color3.fromRGB(150, 150, 150)
+    }
+}
+
+-- UI Configuration
+Config.UI = {
+    -- Main window
+    windowSize = UDim2.new(0, 480, 0, 560),
+    windowTransparency = 0.05, -- More transparent background
     
-    ContentBg = Color3.fromRGB(30, 30, 35),
-    ContentBgTransparency = 0.5,
-    
-    -- Accent colors
-    Primary = Color3.fromRGB(139, 92, 246), -- Purple (lebih soft)
-    PrimaryHover = Color3.fromRGB(167, 139, 250),
-    
-    Secondary = Color3.fromRGB(59, 130, 246), -- Blue (lebih soft)
-    SecondaryHover = Color3.fromRGB(96, 165, 250),
-    
-    Success = Color3.fromRGB(34, 197, 94),
-    Danger = Color3.fromRGB(239, 68, 68),
-    Warning = Color3.fromRGB(251, 146, 60),
+    -- Colors (more subtle)
+    primaryColor = Color3.fromRGB(100, 50, 200),    -- Purple
+    secondaryColor = Color3.fromRGB(80, 80, 90),    -- Dark gray
+    accentColor = Color3.fromRGB(120, 70, 220),     -- Light purple
+    successColor = Color3.fromRGB(70, 180, 90),     -- Green
+    dangerColor = Color3.fromRGB(220, 70, 70),      -- Red
+    warningColor = Color3.fromRGB(240, 180, 50),    -- Yellow
     
     -- Text colors
-    TextPrimary = Color3.fromRGB(255, 255, 255),
-    TextSecondary = Color3.fromRGB(200, 200, 210),
-    TextMuted = Color3.fromRGB(150, 150, 160),
+    textPrimary = Color3.fromRGB(240, 240, 245),
+    textSecondary = Color3.fromRGB(180, 180, 190),
+    textMuted = Color3.fromRGB(120, 120, 130),
     
-    -- Border
-    Border = Color3.fromRGB(139, 92, 246),
-    BorderTransparency = 0.5
+    -- Background colors (transparent)
+    backgroundPrimary = Color3.fromRGB(15, 15, 20),
+    backgroundSecondary = Color3.fromRGB(25, 25, 32),
+    backgroundTertiary = Color3.fromRGB(35, 35, 45)
 }
 
--- UI Layout configuration
-Config.Layout = {
-    MainFrameSize = UDim2.new(0, 500, 0, 600),
-    CornerRadius = 16,
-    Padding = 10,
-    ButtonHeight = 45,
-    SliderHeight = 75
+-- Runtime Data
+Config.Runtime = {
+    currentTab = "movement",
+    savedCheckpoint = nil,
+    connections = {},
+    flyBodyVelocity = nil
 }
 
--- Hotkeys
-Config.Hotkeys = {
-    ToggleUI = Enum.KeyCode.RightControl,
-    ToggleFly = Enum.KeyCode.F,
-    ToggleNoclip = Enum.KeyCode.N
-}
+-- Save/Load Settings (optional)
+function Config:Save()
+    -- Implement save to DataStore if needed
+end
 
--- Anti-detection settings
-Config.AntiDetection = {
-    RandomizeGuiName = true,
-    HideFromDevConsole = true,
-    SecureMetatable = true
-}
+function Config:Load()
+    -- Implement load from DataStore if needed
+end
+
+function Config:Reset()
+    self.States = {
+        speed = false,
+        fly = false,
+        noclip = false,
+        fullbright = false,
+        antiKick = false,
+        esp = false,
+        xray = false
+    }
+    
+    self.Settings = {
+        walkSpeed = 50,
+        flySpeed = 50,
+        jumpPower = 100,
+        brightness = {
+            enabled = false,
+            level = 3,
+            ambient = Color3.fromRGB(200, 200, 200),
+            outdoorAmbient = Color3.fromRGB(150, 150, 150)
+        }
+    }
+end
 
 return Config
