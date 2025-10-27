@@ -31,7 +31,7 @@ _G.ANOS.Player = Players.LocalPlayer
 -- Load modules dengan error handling
 local function loadModule(path, name)
     local success, module = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/yourusername/ANOS-Exploit/main/" .. path))()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/anos-rgb/ANOS-SCRIPIT3/" .. path))()
     end)
     
     if success then
