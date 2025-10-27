@@ -1,35 +1,75 @@
 --[[
-    ANOS EXPLOIT - Utility Functions
-    Helper functions untuk berbagai keperluan
-]]
+    ANOS Helper Functions
+    Common utility functions used across modules
+]]--
 
+local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
-local Utils = {}
+local Helpers = {}
+local player = Players.LocalPlayer
 
--- Tween helper
-function Utils.Tween(object, duration, properties, easingStyle, easingDirection)
-    local tweenInfo = TweenInfo.new(
-        duration or 0.3,
-        easingStyle or Enum.EasingStyle.Quad,
-        easingDirection or Enum.EasingDirection.Out
-    )
-    
-    local tween = TweenService:Create(object, tweenInfo, properties)
-    tween:Play()
-    return tween
+-- Get Character Components
+function Helpers.GetCharacter()
+    return player.Character or player.CharacterAdded:Wait()
 end
 
--- Create rounded corner
-function Utils.AddCorner(parent, radius)
+function Helpers.GetHumanoid()
+    local character = Helpers.GetCharacter()
+    return character and character:FindFirstChildOfClass("Humanoid")
+end
+
+function Helpers.GetRootPart()
+    local character = Helpers.GetCharacter()
+    return character and character:FindFirstChild("HumanoidRootPart")
+end
+
+-- Tween Helpers
+function Helpers.TweenPosition(instance, targetPosition, duration)
+    duration = duration or 0.3
+    TweenService:Create(
+        instance,
+        TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Position = targetPosition}
+    ):Play()
+end
+
+function Helpers.TweenSize(instance, targetSize, duration)
+    duration = duration or 0.3
+    TweenService:Create(
+        instance,
+        TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {Size = targetSize}
+    ):Play()
+end
+
+function Helpers.TweenColor(instance, targetColor, duration)
+    duration = duration or 0.3
+    TweenService:Create(
+        instance,
+        TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {BackgroundColor3 = targetColor}
+    ):Play()
+end
+
+function Helpers.TweenTransparency(instance, targetTransparency, duration)
+    duration = duration or 0.3
+    TweenService:Create(
+        instance,
+        TweenInfo.new(duration, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+        {BackgroundTransparency = targetTransparency}
+    ):Play()
+end
+
+-- UI Helpers
+function Helpers.CreateCorner(parent, radius)
     local corner = Instance.new("UICorner")
     corner.CornerRadius = UDim.new(0, radius or 12)
     corner.Parent = parent
     return corner
 end
 
--- Create stroke/border
-function Utils.AddStroke(parent, color, thickness, transparency)
+function Helpers.CreateStroke(parent, color, thickness, transparency)
     local stroke = Instance.new("UIStroke")
     stroke.Color = color or Color3.fromRGB(255, 255, 255)
     stroke.Thickness = thickness or 1
@@ -38,126 +78,104 @@ function Utils.AddStroke(parent, color, thickness, transparency)
     return stroke
 end
 
--- Create gradient
-function Utils.AddGradient(parent, colors, rotation)
+function Helpers.CreateGradient(parent, colorSequence, rotation)
     local gradient = Instance.new("UIGradient")
-    
-    if colors then
-        local colorSequence = {}
-        for i, color in ipairs(colors) do
-            table.insert(colorSequence, ColorSequenceKeypoint.new((i-1)/(#colors-1), color))
-        end
-        gradient.Color = ColorSequence.new(colorSequence)
-    end
-    
+    gradient.Color = colorSequence
     gradient.Rotation = rotation or 0
     gradient.Parent = parent
     return gradient
 end
 
--- Notify user
-function Utils.Notify(title, message, duration)
-    local notifDuration = duration or 3
+-- Animation Effects
+function Helpers.ButtonPressEffect(button)
+    local originalSize = button.Size
+    Helpers.TweenSize(button, UDim2.new(
+        originalSize.X.Scale * 0.95,
+        originalSize.X.Offset * 0.95,
+        originalSize.Y.Scale * 0.95,
+        originalSize.Y.Offset * 0.95
+    ), 0.1)
     
-    -- Simple notification (bisa dikembangkan lebih lanjut)
-    game:GetService("StarterGui"):SetCore("SendNotification", {
-        Title = title or "ANOS Exploit",
-        Text = message or "",
-        Duration = notifDuration,
-        Icon = ""
+    task.wait(0.1)
+    
+    Helpers.TweenSize(button, originalSize, 0.1)
+end
+
+function Helpers.ButtonHoverEffect(button, hoverColor, originalColor)
+    button.MouseEnter:Connect(function()
+        Helpers.TweenColor(button, hoverColor, 0.2)
+    end)
+    
+    button.MouseLeave:Connect(function()
+        Helpers.TweenColor(button, originalColor, 0.2)
+    end)
+end
+
+-- Connection Management
+function Helpers.AddConnection(name, connection)
+    if not _G.ANOS.Config.Runtime.connections then
+        _G.ANOS.Config.Runtime.connections = {}
+    end
+    
+    table.insert(_G.ANOS.Config.Runtime.connections, {
+        Name = name,
+        Connection = connection
     })
 end
 
--- Safe get service
-function Utils.GetService(serviceName)
-    local success, service = pcall(function()
-        return game:GetService(serviceName)
-    end)
+function Helpers.RemoveConnection(name)
+    local connections = _G.ANOS.Config.Runtime.connections
+    if not connections then return end
     
-    return success and service or nil
-end
-
--- Check if player exists
-function Utils.PlayerExists(playerName)
-    local Players = game:GetService("Players")
-    for _, player in pairs(Players:GetPlayers()) do
-        if player.Name == playerName or player.DisplayName == playerName then
-            return true, player
+    for i = #connections, 1, -1 do
+        if connections[i] and connections[i].Name == name then
+            connections[i].Connection:Disconnect()
+            table.remove(connections, i)
         end
     end
-    return false, nil
 end
 
--- Get player's character
-function Utils.GetPlayerCharacter(player)
-    if player and player.Character then
-        local humanoid = player.Character:FindFirstChild("Humanoid")
-        local rootPart = player.Character:FindFirstChild("HumanoidRootPart")
-        
-        if humanoid and rootPart then
-            return player.Character, humanoid, rootPart
-        end
-    end
-    return nil, nil, nil
-end
-
--- Safe teleport
-function Utils.Teleport(targetCFrame, attempts)
-    attempts = attempts or 3
-    local core = _G.ANOS.Core
+function Helpers.DisconnectAll()
+    local connections = _G.ANOS.Config.Runtime.connections
+    if not connections then return end
     
-    if not core or not core.RootPart then
-        return false
-    end
-    
-    for i = 1, attempts do
-        core.RootPart.CFrame = targetCFrame
-        task.wait(0.1)
-        
-        -- Check if teleport successful
-        local distance = (core.RootPart.Position - targetCFrame.Position).Magnitude
-        if distance < 10 then
-            return true
+    for _, connection in pairs(connections) do
+        if connection.Connection then
+            connection.Connection:Disconnect()
         end
     end
     
-    return false
+    _G.ANOS.Config.Runtime.connections = {}
 end
 
--- Format number
-function Utils.FormatNumber(num)
-    if num >= 1000000 then
-        return string.format("%.1fM", num / 1000000)
-    elseif num >= 1000 then
-        return string.format("%.1fK", num / 1000)
-    else
-        return tostring(math.floor(num))
-    end
+-- Notification System
+function Helpers.Notify(message, duration, notifType)
+    duration = duration or 3
+    notifType = notifType or "info"
+    
+    local colors = {
+        info = _G.ANOS.Config.UI.primaryColor,
+        success = _G.ANOS.Config.UI.successColor,
+        warning = _G.ANOS.Config.UI.warningColor,
+        error = _G.ANOS.Config.UI.dangerColor
+    }
+    
+    -- Create notification (implement full notification UI if needed)
+    print("[ANOS] " .. message)
 end
 
--- Deep copy table
-function Utils.DeepCopy(original)
-    local copy
-    if type(original) == 'table' then
-        copy = {}
-        for key, value in next, original, nil do
-            copy[Utils.DeepCopy(key)] = Utils.DeepCopy(value)
-        end
-        setmetatable(copy, Utils.DeepCopy(getmetatable(original)))
-    else
-        copy = original
-    end
-    return copy
-end
-
--- Lerp function
-function Utils.Lerp(a, b, t)
+-- Math Helpers
+function Helpers.Lerp(a, b, t)
     return a + (b - a) * t
 end
 
--- Clamp function
-function Utils.Clamp(value, min, max)
+function Helpers.Clamp(value, min, max)
     return math.max(min, math.min(max, value))
 end
 
-return Utils
+-- String Helpers
+function Helpers.FormatNumber(number)
+    return tostring(math.floor(number))
+end
+
+return Helpers
