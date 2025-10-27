@@ -20,7 +20,7 @@ Config.States = {
 Config.Settings = {
     walkSpeed = 50,
     flySpeed = 50,
-    jumpPower = 100,
+    jumpPower = 50,
     
     -- New brightness settings
     brightness = {
@@ -35,7 +35,7 @@ Config.Settings = {
 Config.UI = {
     -- Main window
     windowSize = UDim2.new(0, 480, 0, 560),
-    windowTransparency = 0.05, -- More transparent background
+    windowTransparency = 0.15, -- More transparent (85% transparent)
     
     -- Colors (more subtle)
     primaryColor = Color3.fromRGB(100, 50, 200),    -- Purple
@@ -50,7 +50,7 @@ Config.UI = {
     textSecondary = Color3.fromRGB(180, 180, 190),
     textMuted = Color3.fromRGB(120, 120, 130),
     
-    -- Background colors (transparent)
+    -- Background colors (more transparent)
     backgroundPrimary = Color3.fromRGB(15, 15, 20),
     backgroundSecondary = Color3.fromRGB(25, 25, 32),
     backgroundTertiary = Color3.fromRGB(35, 35, 45)
