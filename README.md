@@ -1,396 +1,475 @@
-# ANOS Exploit - Premium Edition v2.0
+# ANOS EXPLOIT v2.0.0
 
-![Version](https://img.shields.io/badge/version-2.0-purple)
-![Platform](https://img.shields.io/badge/platform-Roblox-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+Premium Roblox Exploit Script - Modular & Modern Design
 
-Exploit Roblox yang powerful dengan UI modern, modular, dan mudah dikembangkan.
+## 🌟 Features
 
-## ✨ Features
+### Movement
+- **Speed Hack** - Customizable walk speed (16-200)
+- **Fly Hack** - Full 3D flight with WASD controls
+- **Noclip** - Walk through walls
+- **Infinite Jump** - Jump infinitely high
 
-### 🏃 Movement
-- **Speed Hack** - Ubah kecepatan berjalan (16-200)
-- **Fly Hack** - Terbang dengan kontrol WASD + Space/Shift
-- **Noclip** - Tembus tembok dan objek
-- **Infinite Jump** - Lompat tanpa batas
+### Visual
+- **Advanced Brightness** - 5-level brightness system for dark games
+- **Night Vision** - Green-tinted vision enhancement
+- **ESP Players** - See players through walls
+- **X-Ray Vision** - See through objects
+- **Remove Fog** - Clear all fog effects
 
-### 👁️ Visual  
-- **Fullbright** - Terangkan seluruh map
-- **Extreme Brightness** ⭐ NEW! - Brightness ekstrem untuk game gelap dengan bloom effect
-- **ESP Players** - Highlight semua player
-- **X-Ray Vision** - Lihat melalui dinding
-- **Remove Fog** - Hapus kabut
+### Teleport
+- **Save/Load Checkpoint** - Save your position
+- **Teleport to Players** - Quick player teleportation
+- **Teleport to Spawn** - Return to spawn point
+- **Custom Coordinates** - Teleport to specific location
 
-### 📍 Teleport
-- **Save/Load Checkpoint** - Simpan dan kembali ke posisi
-- **Teleport to Spawn** - Kembali ke spawn
-- **Teleport to Players** - TP ke player lain dengan list dinamis
+### Miscellaneous
+- **Anti-Kick** - Prevents server kicks
+- **Server Hop** - Find new server
+- **Rejoin** - Rejoin current server
+- **Copy Game Link** - Copy game URL
+- **Player Info** - View account details
 
-### 🛠️ Misc
-- **Anti-Kick** - Proteksi dari kick
-- **FPS Counter** - Monitor FPS real-time
-- **Player Info** - Tampilkan info akun
-- **Reset Character** - Reset karakter
-- **Rejoin Server** - Rejoin otomatis
-- **Server Hop** - Pindah server otomatis
-- **Copy Game Link** - Copy link game
-
-## 📁 Struktur Folder
+## 📁 Project Structure
 
 ```
 ANOS-Exploit/
-├── anos.lua                    # Main entry point
+├── anos.lua              # Main entry point
 ├── config/
-│   └── settings.lua           # Konfigurasi dan theme
-├── core/
-│   ├── init.lua              # Core system
-│   └── character.lua         # Character management (opsional)
+│   └── settings.lua      # Configuration & settings
 ├── ui/
-│   ├── main.lua              # Main UI
-│   ├── components.lua        # UI components
-│   └── themes.lua            # Theme presets (opsional)
-├── modules/
-│   ├── movement.lua          # Movement features
-│   ├── visual.lua            # Visual features
-│   ├── teleport.lua          # Teleport features
-│   └── misc.lua              # Miscellaneous features
+│   ├── main.lua          # Main UI controller
+│   ├── components.lua    # Reusable UI components
+│   └── themes.lua        # Color themes
+├── features/
+│   ├── movement.lua      # Movement features
+│   ├── visual.lua        # Visual features
+│   ├── teleport.lua      # Teleport features
+│   └── misc.lua          # Miscellaneous features
 └── utils/
-    └── helpers.lua           # Helper functions
+    └── helpers.lua       # Helper functions
 ```
 
-## 🚀 Instalasi
+## 🚀 Installation
 
-### Method 1: Load dari GitHub (Recommended)
-
+### Method 1: Direct Load (Recommended)
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/yourusername/ANOS-Exploit/main/anos.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/anos-rgb/ANOS-SCRIPIT3/main/anos-sc-codex-djvnhz76f.lua"))()
 ```
 
-### Method 2: Copy Paste Manual
+### Method 2: Manual Load
+1. Download all files from GitHub
+2. Upload to your own GitHub repository
+3. Update `GITHUB_BASE` URL in `anos.lua`
+4. Execute the main script
 
-1. Copy semua file ke executor Anda
-2. Jalankan `anos.lua`
+## 📝 Usage
 
-## 🎨 Theme
+### Basic Controls
+- Click the **toggle button** (floating "A" button) to open/close menu
+- Drag the toggle button to move it anywhere on screen
+- Use tabs to navigate between features
+- Toggle switches turn features on/off
+- Sliders adjust values in real-time
 
-UI menggunakan theme modern dengan:
-- Background transparan untuk performa lebih baik
-- Gradient purple-blue yang soft
-- Smooth animations
-- Responsive hover effects
+### Keyboard Shortcuts
+When **Fly** is enabled:
+- `W` - Forward
+- `S` - Backward
+- `A` - Left
+- `D` - Right
+- `Space` - Up
+- `Left Shift` - Down
 
-### Customize Theme
+## 🎨 Customization
 
-Edit `config/settings.lua`:
-
+### Changing Theme
+Edit `ui/themes.lua` to customize colors:
 ```lua
-Config.Theme = {
-    MainBg = Color3.fromRGB(15, 15, 20),
-    MainBgTransparency = 0.3,
-    Primary = Color3.fromRGB(139, 92, 246),  -- Purple
-    Secondary = Color3.fromRGB(59, 130, 246), -- Blue
-    -- ... dll
+Themes.Dark = {
+    primary = Color3.fromRGB(100, 50, 200),  -- Main accent color
+    background = Color3.fromRGB(15, 15, 20),  -- Background
+    -- ... more colors
 }
 ```
 
-## ⌨️ Hotkeys
+### Adding New Features
+1. Create new function in appropriate feature module
+2. Add UI button in `ui/main.lua`
+3. Connect button callback to your function
 
-- `Right Ctrl` - Toggle UI
-- `F` - Toggle Fly
-- `N` - Toggle Noclip
+Example:
+```lua
+-- In features/movement.lua
+function Movement.CustomFeature()
+    -- Your code here
+end
 
-Edit hotkeys di `config/settings.lua`:
+-- In ui/main.lua (in LoadMovementTab function)
+Components.CreateButton({
+    parent = contentFrame,
+    text = "MY FEATURE",
+    callback = function()
+        Movement.CustomFeature()
+    end
+})
+```
+
+## 🔧 Configuration
+
+Edit `config/settings.lua` to change default values:
 
 ```lua
-Config.Hotkeys = {
-    ToggleUI = Enum.KeyCode.RightControl,
-    ToggleFly = Enum.KeyCode.F,
-    ToggleNoclip = Enum.KeyCode.N
+Config.Settings = {
+    walkSpeed = 50,      -- Default speed
+    flySpeed = 50,       -- Default fly speed
+    jumpPower = 100,     -- Jump height
+    
+    brightness = {
+        level = 3,       -- Brightness level (1-5)
+        -- ... more settings
+    }
 }
 ```
 
-## 🔧 Menambah Fitur Baru
+## 📚 API Reference
 
-Sistem modular memudahkan penambahan fitur tanpa merusak code existing.
-
-### Contoh: Tambah Fitur di Module Movement
-
-**1. Edit `modules/movement.lua`:**
-
+### Global Namespace
+All modules are accessible via `_G.ANOS`:
 ```lua
--- Tambah fungsi baru
-function Movement.SuperJump()
-    local core = _G.ANOS.Core
-    if not core.Humanoid then return end
-    
-    core.Humanoid.JumpPower = 200
-    core.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    
-    _G.ANOS.Utils.Notify("Jump", "Super jump activated!", 2)
-end
+_G.ANOS.Movement   -- Movement features
+_G.ANOS.Visual     -- Visual features
+_G.ANOS.Teleport   -- Teleport features
+_G.ANOS.Misc       -- Miscellaneous features
+_G.ANOS.Helpers    -- Helper functions
+_G.ANOS.Config     -- Configuration
+_G.ANOS.Themes     -- UI themes
+_G.ANOS.Components -- UI components
+_G.ANOS.UI         -- UI controller
 ```
 
-**2. Tambah UI Button di `ui/main.lua`:**
-
+### Example Usage
 ```lua
-function UI.LoadMovementTab()
-    -- ... existing buttons ...
-    
-    Components.CreateButton(UI.ContentFrame, {
-        Text = "🚀 Super Jump",
-        Color = _G.ANOS.Config.Theme.SecondaryBg,
-        Callback = function()
-            _G.ANOS.Modules.Movement.SuperJump()
-        end
-    })
-end
+-- Enable speed hack
+_G.ANOS.Movement.EnableSpeed(true)
+
+-- Set custom speed
+_G.ANOS.Movement.SetWalkSpeed(100)
+
+-- Save checkpoint
+_G.ANOS.Teleport.SaveCheckpoint()
+
+-- Enable brightness
+_G.ANOS.Visual.EnableBrightness(true)
 ```
 
-Selesai! Fitur baru siap digunakan.
+## 🛡️ Safety Features
 
-## 🎯 API Reference
+- **Anti-Detection**: Randomized GUI names
+- **Error Handling**: Try-catch on all critical functions
+- **Clean Disconnect**: Properly disconnects all connections on close
+- **State Persistence**: Remembers feature states across respawns
 
-### Core Functions
+## ⚠️ Disclaimer
+
+This script is for **educational purposes only**. Use at your own risk. The developers are not responsible for any consequences of using this script, including but not limited to:
+- Account bans or terminations
+- Game crashes
+- Data loss
+
+Always respect game rules and terms of service.
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+### Coding Standards
+- Use meaningful variable names
+- Comment complex logic
+- Follow existing code structure
+- Test thoroughly before submitting
+
+## 📄 License
+
+This project is licensed under the MIT License - see LICENSE file for details.
+
+## 📞 Support
+
+- **GitHub Issues**: Report bugs or request features
+- **Discussions**: Ask questions or share ideas
+
+## 🔄 Changelog
+
+### Version 2.0.0 (Current)
+- ✨ Complete modular rewrite
+- 🎨 New transparent UI design
+- 🌙 Advanced brightness system (5 levels)
+- 🎭 Multiple theme support
+- 📦 Separated into organized modules
+- 🚀 Improved performance
+- 🛠️ Better error handling
+- 📱 Mobile-friendly toggle button
+
+### Version 1.0.0
+- Initial release
+- Basic features implementation
+
+## 🎯 Roadmap
+
+### Planned Features
+- [ ] Custom keybinds
+- [ ] Config save/load system
+- [ ] More themes (Cyber, Midnight)
+- [ ] Advanced ESP options (distance, health bars)
+- [ ] Teleport waypoints system
+- [ ] Click teleport
+- [ ] Auto-farm framework
+- [ ] Script hub integration
+
+## 💡 Tips & Tricks
+
+### Performance Optimization
+- Disable unused features to reduce lag
+- Lower fly speed in laggy servers
+- Use brightness level 2-3 for best visibility/performance
+
+### Best Practices
+- Always save a checkpoint before risky actions
+- Test features in private servers first
+- Use Anti-Kick in strict games
+- Keep the toggle button in a safe spot
+
+### Troubleshooting
+**Issue**: Features not working after respawn  
+**Solution**: Features auto-reapply on respawn. If not, toggle them off and on again.
+
+**Issue**: Fly not responding  
+**Solution**: Make sure you're not in a restricted area. Try disabling and re-enabling fly.
+
+**Issue**: UI not showing  
+**Solution**: Check if CoreGui access is available. Some executors have restrictions.
+
+**Issue**: Brightness too intense  
+**Solution**: Lower brightness level in slider (1-5). Level 2-3 is recommended.
+
+## 🔑 Advanced Usage
+
+### Scripting with ANOS
+
+You can control ANOS features from other scripts:
 
 ```lua
--- Character management
-_G.ANOS.Core.SetupCharacter()
-_G.ANOS.Core.Cleanup()
+-- Wait for ANOS to load
+repeat task.wait() until _G.ANOS and _G.ANOS.Loaded
 
--- Connection management  
-_G.ANOS.Core.AddConnection(name, connection)
-_G.ANOS.Core.RemoveConnection(name)
+-- Enable multiple features at once
+_G.ANOS.Movement.EnableSpeed(true)
+_G.ANOS.Movement.SetWalkSpeed(150)
+_G.ANOS.Visual.EnableBrightness(true)
+_G.ANOS.Visual.SetBrightnessLevel(4)
+
+-- Create custom notification
+_G.ANOS.Helpers.Notify("Custom script loaded!", 3, "success")
+
+-- Teleport to custom coordinates
+_G.ANOS.Teleport.ToCoordinates(100, 50, 200)
+
+-- Get player information
+local info = _G.ANOS.Misc.GetPlayerInfo()
+print("Playing as: " .. info.Username)
 ```
 
-### Utils Functions
+### Creating Custom UI
+
+Use ANOS components in your own scripts:
 
 ```lua
--- UI Helpers
-_G.ANOS.Utils.Tween(object, duration, properties)
-_G.ANOS.Utils.AddCorner(parent, radius)
-_G.ANOS.Utils.AddStroke(parent, color, thickness)
-_G.ANOS.Utils.AddGradient(parent, colors, rotation)
-
--- Notifications
-_G.ANOS.Utils.Notify(title, message, duration)
-
--- Teleport
-_G.ANOS.Utils.Teleport(targetCFrame, attempts)
-
--- Player utilities
-_G.ANOS.Utils.PlayerExists(playerName)
-_G.ANOS.Utils.GetPlayerCharacter(player)
-```
-
-### Module Functions
-
-#### Movement Module
-```lua
-_G.ANOS.Modules.Movement.EnableSpeed()
-_G.ANOS.Modules.Movement.DisableSpeed()
-_G.ANOS.Modules.Movement.ToggleSpeed()
-_G.ANOS.Modules.Movement.SetWalkSpeed(speed)
-
-_G.ANOS.Modules.Movement.EnableFly()
-_G.ANOS.Modules.Movement.DisableFly()
-_G.ANOS.Modules.Movement.ToggleFly()
-_G.ANOS.Modules.Movement.SetFlySpeed(speed)
-
-_G.ANOS.Modules.Movement.EnableNoclip()
-_G.ANOS.Modules.Movement.DisableNoclip()
-_G.ANOS.Modules.Movement.ToggleNoclip()
-
-_G.ANOS.Modules.Movement.InfiniteJump()
-```
-
-#### Visual Module
-```lua
-_G.ANOS.Modules.Visual.EnableFullbright()
-_G.ANOS.Modules.Visual.DisableFullbright()
-_G.ANOS.Modules.Visual.ToggleFullbright()
-
-_G.ANOS.Modules.Visual.EnableBrightness()
-_G.ANOS.Modules.Visual.DisableBrightness()
-_G.ANOS.Modules.Visual.ToggleBrightness()
-_G.ANOS.Modules.Visual.SetBrightness(value)
-
-_G.ANOS.Modules.Visual.EnableESP()
-_G.ANOS.Modules.Visual.DisableESP()
-_G.ANOS.Modules.Visual.ToggleESP()
-
-_G.ANOS.Modules.Visual.ToggleXRay()
-_G.ANOS.Modules.Visual.RemoveFog()
-_G.ANOS.Modules.Visual.RestoreFog()
-```
-
-#### Teleport Module
-```lua
-_G.ANOS.Modules.Teleport.SaveCheckpoint()
-_G.ANOS.Modules.Teleport.LoadCheckpoint()
-_G.ANOS.Modules.Teleport.ToSpawn()
-_G.ANOS.Modules.Teleport.ToPlayer(playerName)
-_G.ANOS.Modules.Teleport.ToCoordinates(x, y, z)
-_G.ANOS.Modules.Teleport.GetPlayerList()
-```
-
-#### Misc Module
-```lua
-_G.ANOS.Modules.Misc.EnableAntiKick()
-_G.ANOS.Modules.Misc.DisableAntiKick()
-_G.ANOS.Modules.Misc.ToggleAntiKick()
-
-_G.ANOS.Modules.Misc.ResetCharacter()
-_G.ANOS.Modules.Misc.RejoinServer()
-_G.ANOS.Modules.Misc.ServerHop()
-_G.ANOS.Modules.Misc.CopyGameLink()
-
-_G.ANOS.Modules.Misc.ToggleFPSCounter()
-_G.ANOS.Modules.Misc.GetPlayerInfo()
-_G.ANOS.Modules.Misc.ShowPlayerInfo()
-```
-
-### UI Components
-
-```lua
--- Create Button
-Components.CreateButton(parent, {
-    Name = "MyButton",
-    Size = UDim2.new(1, -10, 0, 45),
-    Text = "Click Me",
-    Color = Color3.fromRGB(50, 50, 60),
-    HoverColor = Color3.fromRGB(100, 100, 120),
-    Callback = function()
+-- Create custom button
+local myButton = _G.ANOS.Components.CreateButton({
+    parent = myFrame,
+    text = "My Custom Button",
+    color = Color3.fromRGB(100, 200, 50),
+    callback = function()
         print("Button clicked!")
     end
 })
 
--- Create Toggle
-Components.CreateToggle(parent, {
-    Name = "MyToggle",
-    Text = "Feature",
-    ActiveText = "✓ Feature ON",
-    InactiveText = "Feature OFF",
-    State = false,
-    Callback = function(state)
-        print("Toggle state:", state)
-    end
-})
-
--- Create Slider
-Components.CreateSlider(parent, {
-    Title = "Speed",
-    Min = 0,
-    Max = 100,
-    Default = 50,
-    Callback = function(value)
-        print("Slider value:", value)
-    end
-})
-
--- Create Tab
-Components.CreateTab(parent, {
-    Name = "MyTab",
-    Text = "TAB NAME",
-    Active = false,
-    Callback = function()
-        print("Tab clicked!")
+-- Create custom slider
+local mySlider = _G.ANOS.Components.CreateSlider({
+    parent = myFrame,
+    title = "My Slider",
+    min = 0,
+    max = 100,
+    default = 50,
+    callback = function(value)
+        print("Slider value: " .. value)
     end
 })
 ```
 
-## 📝 Changelog
+## 📊 Module Documentation
 
-### Version 2.0 (Current)
-- ✨ Complete rewrite dengan sistem modular
-- 🎨 UI baru dengan transparansi dan gradient modern
-- ⭐ **NEW:** Extreme Brightness feature untuk game gelap
-- 🔧 Mudah menambah fitur baru
-- 📦 Organized folder structure
-- 🎯 Better error handling
-- ⚡ Improved performance
-- 📱 Responsive UI dengan smooth animations
-- 🔑 Hotkey support
-- 💾 State persistence setelah respawn
+### Movement Module
+```lua
+Movement.EnableSpeed(boolean)           -- Toggle speed hack
+Movement.SetWalkSpeed(number)           -- Set walk speed (16-200)
+Movement.EnableFly(boolean)             -- Toggle fly hack
+Movement.SetFlySpeed(number)            -- Set fly speed (16-200)
+Movement.EnableNoclip(boolean)          -- Toggle noclip
+Movement.InfiniteJump()                 -- Execute jump
+Movement.SetJumpPower(number)           -- Set jump power
+Movement.SetupCharacter()               -- Reapply features on respawn
+```
 
-### Version 1.0
-- Initial release
-- Basic features
+### Visual Module
+```lua
+Visual.EnableBrightness(boolean)        -- Toggle brightness
+Visual.SetBrightnessLevel(number)       -- Set level (1-5)
+Visual.ToggleESP()                      -- Toggle player ESP
+Visual.EnableESP(boolean)               -- Enable/disable ESP
+Visual.ToggleXRay()                     -- Toggle X-Ray vision
+Visual.RemoveFog()                      -- Remove all fog
+Visual.ToggleNightVision()              -- Toggle night vision
+```
 
-## 🐛 Troubleshooting
+### Teleport Module
+```lua
+Teleport.SaveCheckpoint()               -- Save current position
+Teleport.LoadCheckpoint()               -- Teleport to saved position
+Teleport.ToSpawn()                      -- Teleport to spawn
+Teleport.ToPlayer(player)               -- Teleport to player
+Teleport.ToCoordinates(x, y, z)         -- Teleport to coordinates
+```
 
-### Script tidak load?
-- Pastikan executor support `HttpGet`
-- Check console untuk error messages
-- Pastikan semua file ada di GitHub
+### Misc Module
+```lua
+Misc.EnableAntiKick(boolean)            -- Toggle anti-kick
+Misc.ResetCharacter()                   -- Reset character
+Misc.RejoinServer()                     -- Rejoin current server
+Misc.ServerHop()                        -- Join different server
+Misc.CopyGameLink()                     -- Copy game URL
+Misc.GetPlayerInfo()                    -- Get player data
+Misc.PrintPlayerInfo()                  -- Print info to console
+Misc.GetGameInfo()                      -- Get game data
+Misc.PrintGameInfo()                    -- Print game info
+```
 
-### Fitur tidak bekerja?
-- Beberapa game punya anti-cheat
-- Try different games untuk testing
-- Check console untuk error messages
+### Helpers Module
+```lua
+Helpers.GetCharacter()                  -- Get character model
+Helpers.GetHumanoid()                   -- Get humanoid
+Helpers.GetRootPart()                   -- Get root part
+Helpers.TweenPosition(instance, pos)    -- Tween position
+Helpers.TweenSize(instance, size)       -- Tween size
+Helpers.TweenColor(instance, color)     -- Tween color
+Helpers.CreateCorner(parent, radius)    -- Create UI corner
+Helpers.CreateStroke(parent, ...)       -- Create UI stroke
+Helpers.ButtonPressEffect(button)       -- Animate button press
+Helpers.AddConnection(name, conn)       -- Add managed connection
+Helpers.RemoveConnection(name)          -- Remove connection
+Helpers.DisconnectAll()                 -- Disconnect all
+Helpers.Notify(message, duration, type) -- Show notification
+```
 
-### UI tidak muncul?
-- Tekan `Right Ctrl` untuk toggle
-- Click tombol "A" floating button
-- Restart script
+## 🎨 Theme Customization
 
-## 💡 Tips
+### Available Themes
+- **Dark** (Default) - Purple accent, dark background
+- **Midnight** - Blue accent, darker background  
+- **Cyber** - Green accent, tech theme
 
-1. **Save checkpoint** sebelum eksperimen dengan teleport
-2. **Anti-kick** tidak 100% work di semua game
-3. **Extreme brightness** sangat berguna untuk horror games
-4. **Server hop** untuk avoid toxic players
-5. Gunakan **noclip + fly** untuk eksplorasi maksimal
+### Switching Themes
+```lua
+_G.ANOS.Themes.SetTheme("Midnight")
+_G.ANOS.Themes.SetTheme("Cyber")
+_G.ANOS.Themes.SetTheme("Dark")
+```
 
-## 🤝 Contributing
+### Creating Custom Theme
+Add to `ui/themes.lua`:
 
-Contributions welcome! Cara contribute:
+```lua
+Themes.MyTheme = {
+    name = "MyTheme",
+    primary = Color3.fromRGB(255, 100, 100),
+    background = Color3.fromRGB(20, 20, 20),
+    -- Add all required color properties
+}
+```
 
-1. Fork repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
+## 🔐 Security Notes
 
-### Development Guidelines
+- Script uses randomized GUI names to avoid detection
+- No telemetry or data collection
+- All features run locally
+- Open source for transparency
+- Regular security audits recommended
 
-- Follow existing code style
-- Test fitur baru di multiple games
-- Update README untuk fitur baru
-- Comment code Anda
-- Keep modules independent
+## 🏆 Credits
 
-## 📄 License
+**Developer**: ANOS Team  
+**Version**: 2.0.0  
+**Built with**: Lua, Roblox Studio  
 
-MIT License - feel free to use and modify
+### Special Thanks
+- Roblox scripting community
+- Beta testers
+- Contributors
 
-## ⚠️ Disclaimer
+## 📱 Mobile Support
 
-Educational purposes only. Use at your own risk. Authors tidak bertanggung jawab atas:
-- Account bans
-- Game bans
-- Data loss
-- Any damages
+ANOS is fully compatible with mobile devices:
+- Touch-friendly toggle button
+- Draggable UI elements
+- Optimized for smaller screens
+- Responsive button sizes
 
-## 👨‍💻 Author
+## 🖥️ Executor Compatibility
 
-Created with ❤️ by ANOS Team
+Tested and working on:
+- ✅ Synapse X
+- ✅ Script-Ware
+- ✅ KRNL
+- ✅ Fluxus
+- ✅ Electron
+- ⚠️ Some features may not work on all executors
 
-## 🌟 Star History
+## 📖 FAQ
 
-Jika project ini membantu, kasih ⭐ di GitHub!
+**Q: Is this safe to use?**  
+A: Use at your own risk. While we implement safety features, exploiting always carries risk.
 
-## 📞 Support
+**Q: Why aren't some features working?**  
+A: Some games have anti-cheat that blocks certain features. Try different games.
 
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/ANOS-Exploit/issues)
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/ANOS-Exploit/discussions)
-- 📧 Email: your.email@example.com
+**Q: Can I get banned?**  
+A: Yes, exploiting violates Roblox TOS and can result in account termination.
 
-## 🔗 Links
+**Q: How do I update?**  
+A: Re-execute the loadstring. The script always loads the latest version.
 
-- [Documentation](https://github.com/yourusername/ANOS-Exploit/wiki)
-- [Changelog](https://github.com/yourusername/ANOS-Exploit/releases)
-- [Roadmap](https://github.com/yourusername/ANOS-Exploit/projects)
+**Q: Can I use this on any game?**  
+A: Most features work on most games, but some games have protections.
+
+**Q: The UI is too transparent, how do I fix it?**  
+A: Edit transparency values in `config/settings.lua` or `ui/themes.lua`.
+
+**Q: How do I add custom features?**  
+A: Follow the "Adding New Features" section in this README.
+
+## 🌐 Links
+
+- **Discord**: [Discord Server]
+  
 
 ---
 
-Made with 💜 for the Roblox community
+**Made by ANOS Team**
+
+*Last Updated: 2025*
